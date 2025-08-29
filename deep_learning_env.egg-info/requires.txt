@@ -1,0 +1,14 @@
+numpy>=1.26
+scipy>=1.12
+pandas>=2.2
+matplotlib>=3.9
+scikit-learn>=1.5
+torch==2.7.1
+torchaudio==2.7.1
+torchvision==0.22.1
+pip==25.1.1
+requests>=2.32.4
+jax>=0.6.2
+gymnasium>=1.2.0
+ale-py>=0.11.2
+ipython>=8.37.0

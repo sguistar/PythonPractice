@@ -1,0 +1,99 @@
+#pyproject.toml – Deep‑Learning environment managed by uv
+
+[project]
+name = "deep-learning-env"
+version = "0.1.0"
+description = "Consolidated deep‑learning toolkit powered by uv"
+readme = "README.md"
+requires-python = ">=3.10"
+
+# --- Core scientific stack (always installed) ---
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.12",
+    "pandas>=2.2",
+    "matplotlib>=3.9",
+    "scikit-learn>=1.5",
+    "torch==2.7.1",
+    "torchaudio==2.7.1",
+    "torchvision==0.22.1",
+    "pip==25.1.1",
+    "requests>=2.32.4",
+    "jax>=0.6.2",
+    "gymnasium>=1.2.0",
+    "ale-py>=0.11.2",
+    "ipython>=8.37.0",
+]
+
+# -----------------------------------------------------------------------------
+# Dependency groups let you install only what you need in each session.
+# Use:   uv install --group <name>       # to pull a specific group
+#        uv install --all                # to pull everything
+# -----------------------------------------------------------------------------
+[dependency-groups]
+
+# ---------- PyTorch ----------
+# CPU‑only build – safest default
+pytorch = [
+    "torch== 2.7.1",
+    "torchvision== 0.22.1",
+    "torchaudio== 2.7.1"]
+
+# Uncomment this group instead if your GPU supports CUDA 12.x
+#pytorch-cuda = [
+#    "torch==2.6.1+cu128",
+#    "torchvision==0.21.0+cu128",
+#    "torchaudio==2.6.1+cu128"
+# ]
+
+# ---------- TensorFlow ----------
+tensorflow = [
+    "tensorflow>=2.16",
+    "keras>=2.16",
+]
+
+# ---------- JAX / Flax ----------
+jax = [
+    "jax>=0.4.28",
+    "jaxlib>=0.4.28",
+    "flax>=0.9",
+    "optax>=0.2",
+]
+
+# ---------- Natural‑Language Processing ----------
+nlp = [
+    "transformers>=4.42",
+    "datasets>=3.9",
+    "accelerate>=0.28",
+    "sentencepiece>=0.2",
+]
+
+# ---------- Computer Vision ----------
+cv = [
+    "opencv-python-headless>=4.11",
+    "albumentations>=1.4",
+    "scikit-image>=0.24",
+]
+
+# ---------- Hyper‑parameter Optimisation & Experiment Mgmt ----------
+optim = [
+    "optuna>=3.6",
+    "ray[tune]>=2.12",
+]
+
+# ---------- Developer Tooling ----------
+dev = [
+    "ruff>=0.4",
+    "black>=24.4",
+    "isort>=5.12",
+    "pytest>=8.2",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel>=0.43"]
+build-backend = "setuptools.build_meta"
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true

@@ -1,0 +1,6 @@
+pyproject.toml
+deep_learning_env.egg-info/PKG-INFO
+deep_learning_env.egg-info/SOURCES.txt
+deep_learning_env.egg-info/dependency_links.txt
+deep_learning_env.egg-info/requires.txt
+deep_learning_env.egg-info/top_level.txt
