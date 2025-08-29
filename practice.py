@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-
+from torch.nn import functional as F
 device = torch.device('mps')
 # 为了方便起见，我们定义了一个计算卷积层的函数。
 # 此函数初始化卷积层权重，并对输入和输出提高和缩减相应的维数
