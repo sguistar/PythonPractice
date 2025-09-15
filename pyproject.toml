@@ -4,7 +4,8 @@
 name = "deep-learning-env"
 version = "0.1.0"
 description = "Consolidated deep‑learning toolkit powered by uv"
-readme = "README.md"
+authors = [{ name = "Sean", email = "seanlinxhr@gmail.com" }]
+license = "MIT"
 requires-python = ">=3.10"
 
 # --- Core scientific stack (always installed) ---
@@ -23,6 +24,7 @@ dependencies = [
     "gymnasium>=1.2.0",
     "ale-py>=0.11.2",
     "ipython>=8.37.0",
+    "librosa>=0.11.0",
 ]
 
 # -----------------------------------------------------------------------------
