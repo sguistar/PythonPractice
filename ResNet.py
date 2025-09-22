@@ -1,5 +1,5 @@
 """
-ResNet-50 in pure PyTorch (Bottleneck blocks)
+ResNet in pure PyTorch (Bottleneck blocks)
 - Clean, readable, ImageNet-ready stem (7x7 conv + 3x3 maxpool)
 - Configurable number of classes, groups/width (ResNeXt style), dilation, and stem type
 - Careful weight init matching common practice
@@ -361,4 +361,4 @@ if __name__ == "__main__":
     model = resnet50(num_classes=1000)
     X = torch.randn(1, 3, 224, 224)
     y = model(X)
-    print("Output shape:", y.shape)  # torch.Size([1, 1000])
+    print("Output shape:", y.shape)  # torch.Size([1, 1000]
