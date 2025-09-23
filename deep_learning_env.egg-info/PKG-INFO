@@ -3,7 +3,7 @@ Name: deep-learning-env
 Version: 0.1.0
 Summary: Consolidated deep‑learning toolkit powered by uv
 Author-email: Sean <seanlinxhr@gmail.com>
-License: MIT
+License-Expression: MIT
 Requires-Python: >=3.10
 Requires-Dist: numpy>=1.26
 Requires-Dist: scipy>=1.12
@@ -20,3 +20,4 @@ Requires-Dist: gymnasium>=1.2.0
 Requires-Dist: ale-py>=0.11.2
 Requires-Dist: ipython>=8.37.0
 Requires-Dist: librosa>=0.11.0
+Requires-Dist: opencv-python>=4.11.0.86
