@@ -1,0 +1,115 @@
+#pyproject.toml – Deep‑Learning environment managed by uv
+
+[project]
+name = "deep-learning-env"
+version = "0.1.0"
+description = "Consolidated deep‑learning toolkit powered by uv"
+requires-python = ">=3.12"
+
+# --- Core scientific stack (always installed) ---
+dependencies = [
+    "numpy",
+    "scipy",
+    "pandas",
+    "matplotlib",
+    "scikit-learn",
+    "torch",
+    "torchvision",
+    "torchaudio",
+    "requests>=2.32.4",
+    "gymnasium>=1.2.0",
+    "ale-py>=0.11.2",
+    "ipython>=8.37.0",
+    "tensorflow>=2.20.0",
+    "paddle>=1.0.2",
+    "jax>=0.7.1",
+    "jieba>=0.42.1",
+]
+
+# -----------------------------------------------------------------------------
+# Dependency groups let you install only what you need in each session.
+# Use:   uv install --group <name>       # to pull a specific group
+#        uv install --all                # to pull everything
+# -----------------------------------------------------------------------------
+[dependency-groups]
+
+# ---------- PyTorch ----------
+# CPU‑only build – safest default
+#pytorch = [
+#    "torch== 2.8.0",
+#    "torchvision== 0.23.0",
+#    "torchaudio== 2.8.0"]
+
+# Uncomment this group instead if your GPU supports CUDA 12.x
+pytorch-cuda = [
+     "torch==2.8.*",
+     "torchvision==0.23.*",
+     "torchaudio==2.8.*"
+ ]
+
+# ---------- TensorFlow ----------
+tensorflow = [
+    "tensorflow>=2.16",
+    "keras>=2.16",
+]
+
+# ---------- JAX / Flax ----------
+jax = [
+    "jax>=0.4.28",
+    "jaxlib>=0.4.28",
+    "flax>=0.9",
+    "optax>=0.2",
+]
+
+# ---------- Natural‑Language Processing ----------
+nlp = [
+    "transformers>=4.42",
+    "datasets>=3.9",
+    "accelerate>=0.28",
+    "sentencepiece>=0.2",
+]
+
+# ---------- Computer Vision ----------
+cv = [
+    "opencv-python-headless>=4.11",
+    "albumentations>=1.4",
+    "scikit-image>=0.24",
+]
+
+# ---------- Hyper‑parameter Optimisation & Experiment Mgmt ----------
+optim = [
+    "optuna>=3.6",
+    "ray[tune]>=2.12",
+]
+
+# ---------- Developer Tooling ----------
+dev = [
+    "ruff>=0.4",
+    "black>=24.4",
+    "isort>=5.12",
+    "pytest>=8.2",
+]
+
+[tool.uv.extra-build-dependencies]
+      paddle = ["common","dual","data","tight","prox"]
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'win32' or sys_platform == 'linux'" }
+]
+torchvision = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'win32' or sys_platform == 'linux'" }
+]
+torchaudio = [
+  { index = "pytorch-cu128", marker = "sys_platform == 'win32' or sys_platform == 'linux'" }
+]
+
+
+#[build-system]
+#requires = ["setuptools>=68", "wheel>=0.43"]
+#build-backend = "setuptools.build_meta"
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
