@@ -107,3 +107,4 @@ predict = predict_output.data.max(1, keepdim=True)[1]
 predict_strs = [idx_to_word[n.item()] for n in predict.squeeze()]
 for input_seq, pred in zip(input_strs, predict_strs):
     print(input_seq, '->', pred)
+    
