@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/PycharmProjects.iml" filepath="$PROJECT_DIR$/.idea/PycharmProjects.iml" />
+=======
+      <module fileurl="file://$USER_HOME$/Desktop/A2A-main/.idea/A2A-main.iml" filepath="$USER_HOME$/Desktop/A2A-main/.idea/A2A-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Practice.iml" filepath="$PROJECT_DIR$/.idea/Practice.iml" />
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
     </modules>
   </component>
 </project>

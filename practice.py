@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import matplotlib.pyplot as plt
 import torch
 from torch import nn
@@ -17,6 +18,35 @@ class Residual(nn.Module):
             self.conv3 = None
         self.bn1 = nn.BatchNorm2d(num_channels)
         self.bn2 = nn.BatchNorm2d(num_channels)
+=======
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+import gymnasium as gym
+import numpy as np
+import matplotlib.pyplot as plt
+
+import d2l
+
+device = torch.device('mps')
+
+
+class Residual(nn.Module):
+    def __init__(self, input_channels, num_channels, use_1x1_conv=False, strides=1):
+        super().__init__()
+        self.conv1 = nn.Conv2d(input_channels, num_channels,
+                               kernel_size=3, padding=1, stride=strides)
+        self.conv2 = nn.Conv2d(num_channels, num_channels,
+                               kernel_size=3, padding=1)
+        if use_1x1_conv:
+            self.conv3 = nn.Conv2d(
+                num_channels, num_channels, kernel_size=1, stride=strides)
+        else:
+            self.conv3 = None
+        self.bn1 = nn.BatchNorm2d(num_features=num_channels)
+        self.bn2 = nn.BatchNorm2d(num_features=num_channels)
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 
     def forward(self, X):
         Y = F.relu(self.bn1(self.conv1(X)))
@@ -24,6 +54,7 @@ class Residual(nn.Module):
         if self.conv3:
             X = self.conv3(X)
         Y += X
+<<<<<<< HEAD
         return F.relu(Y)
     
 def resnet_block(input_channels, num_channels, num_residuals, first_block=False):
@@ -56,3 +87,12 @@ lr, num_epochs, batch_size = 0.05, 5, 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=96)
 d2l.train_ch6(net, train_iter, test_iter, num_epochs, lr, device)
 d2l.plt.show()
+=======
+        return Y
+
+
+blk = Residual(3, 3)
+X = torch.rand(4, 3, 6, 6)
+Y = blk(X)
+print(Y.shape)
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77

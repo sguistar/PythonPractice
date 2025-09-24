@@ -21,12 +21,16 @@ dependencies = [
     "ale-py>=0.11.2",
     "ipython>=8.37.0",
     "tensorflow>=2.20.0",
+<<<<<<< HEAD
     "paddle>=1.0.2",
     "jax>=0.7.1",
     "jieba>=0.42.1",
     "beautifulsoup4>=4.13.5",
     "tqdm>=4.67.1",
     "openpyxl>=3.1.5",
+=======
+    "jax>=0.7.1",
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 ]
 
 # -----------------------------------------------------------------------------
@@ -38,10 +42,17 @@ dependencies = [
 
 # ---------- PyTorch ----------
 # CPU‑only build – safest default
+<<<<<<< HEAD
 #pytorch = [
 #    "torch== 2.8.0",
 #    "torchvision== 0.23.0",
 #    "torchaudio== 2.8.0"]
+=======
+pytorch = [
+   "torch== 2.8.0",
+   "torchvision== 0.23.0",
+   "torchaudio== 2.8.0"]
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 
 # Uncomment this group instead if your GPU supports CUDA 12.x
 pytorch-cuda = [
@@ -93,9 +104,12 @@ dev = [
     "pytest>=8.2",
 ]
 
+<<<<<<< HEAD
 [tool.uv.extra-build-dependencies]
       paddle = ["common","dual","data","tight","prox"]
 
+=======
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 [tool.uv.sources]
 torch = [
   { index = "pytorch-cu128", marker = "sys_platform == 'win32' or sys_platform == 'linux'" }

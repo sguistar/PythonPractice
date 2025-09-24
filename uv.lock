@@ -230,6 +230,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "beautifulsoup4"
 version = "4.13.5"
 source = { registry = "https://pypi.org/simple" }
@@ -243,6 +244,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 name = "black"
 version = "25.9.0"
 source = { registry = "https://pypi.org/simple" }
@@ -491,6 +494,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "ale-py" },
+<<<<<<< HEAD
     { name = "beautifulsoup4" },
     { name = "gymnasium" },
     { name = "ipython" },
@@ -500,6 +504,13 @@ dependencies = [
     { name = "numpy" },
     { name = "openpyxl" },
     { name = "paddle" },
+=======
+    { name = "gymnasium" },
+    { name = "ipython" },
+    { name = "jax" },
+    { name = "matplotlib" },
+    { name = "numpy" },
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
     { name = "pandas" },
     { name = "requests" },
     { name = "scikit-learn" },
@@ -511,7 +522,10 @@ dependencies = [
     { name = "torchaudio", version = "2.8.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
     { name = "torchvision", version = "0.23.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'linux' and sys_platform != 'win32'" },
     { name = "torchvision", version = "0.23.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+<<<<<<< HEAD
     { name = "tqdm" },
+=======
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 ]
 
 [package.dev-dependencies]
@@ -542,6 +556,17 @@ optim = [
     { name = "optuna" },
     { name = "ray", extra = ["tune"] },
 ]
+<<<<<<< HEAD
+=======
+pytorch = [
+    { name = "torch", version = "2.8.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'linux' and sys_platform != 'win32'" },
+    { name = "torch", version = "2.8.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+    { name = "torchaudio", version = "2.8.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'linux' and sys_platform != 'win32'" },
+    { name = "torchaudio", version = "2.8.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+    { name = "torchvision", version = "0.23.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'linux' and sys_platform != 'win32'" },
+    { name = "torchvision", version = "0.23.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 pytorch-cuda = [
     { name = "torch", version = "2.8.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'linux' and sys_platform != 'win32'" },
     { name = "torch", version = "2.8.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
@@ -558,6 +583,7 @@ tensorflow = [
 [package.metadata]
 requires-dist = [
     { name = "ale-py", specifier = ">=0.11.2" },
+<<<<<<< HEAD
     { name = "beautifulsoup4", specifier = ">=4.13.5" },
     { name = "gymnasium", specifier = ">=1.2.0" },
     { name = "ipython", specifier = ">=8.37.0" },
@@ -567,6 +593,13 @@ requires-dist = [
     { name = "numpy" },
     { name = "openpyxl", specifier = ">=3.1.5" },
     { name = "paddle", specifier = ">=1.0.2" },
+=======
+    { name = "gymnasium", specifier = ">=1.2.0" },
+    { name = "ipython", specifier = ">=8.37.0" },
+    { name = "jax", specifier = ">=0.7.1" },
+    { name = "matplotlib" },
+    { name = "numpy" },
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
     { name = "pandas" },
     { name = "requests", specifier = ">=2.32.4" },
     { name = "scikit-learn" },
@@ -578,7 +611,10 @@ requires-dist = [
     { name = "torchaudio", marker = "sys_platform == 'linux' or sys_platform == 'win32'", index = "https://download.pytorch.org/whl/cu128" },
     { name = "torchvision", marker = "sys_platform != 'linux' and sys_platform != 'win32'" },
     { name = "torchvision", marker = "sys_platform == 'linux' or sys_platform == 'win32'", index = "https://download.pytorch.org/whl/cu128" },
+<<<<<<< HEAD
     { name = "tqdm", specifier = ">=4.67.1" },
+=======
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 ]
 
 [package.metadata.requires-dev]
@@ -609,6 +645,17 @@ optim = [
     { name = "optuna", specifier = ">=3.6" },
     { name = "ray", extras = ["tune"], specifier = ">=2.12" },
 ]
+<<<<<<< HEAD
+=======
+pytorch = [
+    { name = "torch", marker = "sys_platform != 'linux' and sys_platform != 'win32'", specifier = "==2.8.0" },
+    { name = "torch", marker = "sys_platform == 'linux' or sys_platform == 'win32'", specifier = "==2.8.0", index = "https://download.pytorch.org/whl/cu128" },
+    { name = "torchaudio", marker = "sys_platform != 'linux' and sys_platform != 'win32'", specifier = "==2.8.0" },
+    { name = "torchaudio", marker = "sys_platform == 'linux' or sys_platform == 'win32'", specifier = "==2.8.0", index = "https://download.pytorch.org/whl/cu128" },
+    { name = "torchvision", marker = "sys_platform != 'linux' and sys_platform != 'win32'", specifier = "==0.23.0" },
+    { name = "torchvision", marker = "sys_platform == 'linux' or sys_platform == 'win32'", specifier = "==0.23.0", index = "https://download.pytorch.org/whl/cu128" },
+]
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 pytorch-cuda = [
     { name = "torch", marker = "sys_platform != 'linux' and sys_platform != 'win32'", specifier = "==2.8.*" },
     { name = "torch", marker = "sys_platform == 'linux' or sys_platform == 'win32'", specifier = "==2.8.*", index = "https://download.pytorch.org/whl/cu128" },
@@ -632,6 +679,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "et-xmlfile"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -641,6 +689,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 name = "etils"
 version = "1.13.0"
 source = { registry = "https://pypi.org/simple" }
@@ -919,7 +969,11 @@ wheels = [
 
 [[package]]
 name = "gymnasium"
+<<<<<<< HEAD
 version = "1.2.1"
+=======
+version = "1.2.0"
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cloudpickle" },
@@ -927,9 +981,15 @@ dependencies = [
     { name = "numpy" },
     { name = "typing-extensions" },
 ]
+<<<<<<< HEAD
 sdist = { url = "https://files.pythonhosted.org/packages/b3/de/b923d09654df8f8ee29a3cc7ec7829ac057efd0d969cc3da0c8a7b219d59/gymnasium-1.2.1.tar.gz", hash = "sha256:4e6480273528523a90b3db99befb6111b13f15fa0866de88c4b675770495b66c", size = 827852, upload-time = "2025-09-23T08:22:39.894Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ef/73/85bc0412f15388e3068dc93331c858df6c8fc635b1e3cb30c7f7070ca481/gymnasium-1.2.1-py3-none-any.whl", hash = "sha256:85cd1c16351db0b89f73be54e952ddfece97b56d1e5400d2dcd59f58b7707963", size = 951141, upload-time = "2025-09-23T08:22:38.117Z" },
+=======
+sdist = { url = "https://files.pythonhosted.org/packages/fd/17/c2a0e15c2cd5a8e788389b280996db927b923410de676ec5c7b2695e9261/gymnasium-1.2.0.tar.gz", hash = "sha256:344e87561012558f603880baf264ebc97f8a5c997a957b0c9f910281145534b0", size = 821142, upload-time = "2025-06-27T08:21:20.262Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a0/e2/a111dbb8625af467ea4760a1373d6ef27aac3137931219902406ccc05423/gymnasium-1.2.0-py3-none-any.whl", hash = "sha256:fc4a1e4121a9464c29b4d7dc6ade3fbeaa36dea448682f5f71a6d2c17489ea76", size = 944301, upload-time = "2025-06-27T08:21:18.83Z" },
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 ]
 
 [[package]]
@@ -1137,12 +1197,15 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "jieba"
 version = "0.42.1"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/c6/cb/18eeb235f833b726522d7ebed54f2278ce28ba9438e3135ab0278d9792a2/jieba-0.42.1.tar.gz", hash = "sha256:055ca12f62674fafed09427f176506079bc135638a14e23e25be909131928db2", size = 19214172, upload-time = "2020-01-20T14:27:23.5Z" }
 
 [[package]]
+=======
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 name = "jinja2"
 version = "3.1.6"
 source = { registry = "https://pypi.org/simple" }
@@ -1847,6 +1910,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "openpyxl"
 version = "3.1.5"
 source = { registry = "https://pypi.org/simple" }
@@ -1859,6 +1923,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 name = "opt-einsum"
 version = "3.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1998,12 +2064,15 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "paddle"
 version = "1.0.2"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/55/cf/e4b6b9a54d2f072e4491e34317bf5f5fea260da8a3072e641832dc9ce770/paddle-1.0.2.tar.gz", hash = "sha256:aeb13606880a932f97eb1a810bc8820c7e80f943abcdb56f272b1375964ef117", size = 579012, upload-time = "2011-02-28T16:43:51.53Z" }
 
 [[package]]
+=======
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 name = "pandas"
 version = "2.3.2"
 source = { registry = "https://pypi.org/simple" }
@@ -3004,6 +3073,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "soupsieve"
 version = "2.8"
 source = { registry = "https://pypi.org/simple" }
@@ -3013,6 +3083,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 name = "sqlalchemy"
 version = "2.0.43"
 source = { registry = "https://pypi.org/simple" }
