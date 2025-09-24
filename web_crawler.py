@@ -1,6 +1,8 @@
 import requests
+from bs4 import BeautifulSoup
 import time
 import random
+import pandas as pd
 
 
 def getHTMLText(url):  # 抓取页面文本
@@ -51,9 +53,36 @@ def saveData(data):  # 保存数据
 
 
 if __name__ == "__main__":
-    for idx in range(1, 11):
-        url = f"https://www.lgfdcw.com/cz/index.php?userid=&infotype=&dq=&fwtype=&hx=&price01=&price02=&pricetype=&fabuday=&addr=&PageNo={idx}"
+    h = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"
+    }
+    url = f"https://movie.douban.com/top250"
+    for i in range(0, 226, 25):
+        p = {"start": str(i), "filter": ""}
+        r = requests.get(url, headers=h, params=p)
+        print(r.status_code)
+        print(r.reason)
+        print(r.request.url)
         time.sleep(random.uniform(1, 3))  # 随机延时，模拟人类行为
-        # parse(text)
-        saveData(getHTMLText(url))
-    print("Data saved successfully.")
+        html = r.text
+        soup = BeautifulSoup(html, 'html.parser')
+        nodes = soup.find_all('div', class_='info')
+        for node in nodes:
+            print(node.find('span', class_='title').text)
+            print('-------------------')
+            print(node.find('div', class_='bd').p.text.strip())
+            print('-------------------')
+            print(node.find('span', class_='rating_num').text if node.find(
+                'p', class_='quote') else 'N/A')
+            print('-------------------')
+            print(node.find('p', class_='quote').span.text if node.find(
+                'p', class_='quote') else 'N/A')
+            print('-------------------')
+            print(node.find('span', property='v:best').find_next_sibling(
+                'span').text.replace('人评价', '').strip() if node.find('span') else 'N/A')
+            print('-------------------')
+        print(f'爬取完成！共获取 {len(nodes)} 部电影信息。')
+
+    # parse(text)
+    # saveData(getHTMLText(url))
+    # print("Data saved successfully.")
