@@ -56,7 +56,7 @@ if __name__ == "__main__":
     h = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"
     }
-    url = "https://movie.douban.com/top250"
+    url = f"https://movie.douban.com/top250"
     for i in range(0, 226, 25):
         p = {"start": str(i), "filter": ""}
         r = requests.get(url, headers=h, params=p)
