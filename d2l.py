@@ -508,17 +508,10 @@ def train_ch6(net, train_iter, test_iter, num_epochs, lr, device):
 
     def init_weights(m):
         if type(m) == nn.Linear or type(m) == nn.Conv2d:
-<<<<<<< HEAD
             nn.init.kaiming_uniform_(m.weight)
 
     net.apply(init_weights)
     print('training on', torch.cuda.get_device_name())
-=======
-            nn.init.xavier_uniform_(m.weight)
-
-    net.apply(init_weights)
-    print('training on', device)
->>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
     net.to(device)
     optimizer = torch.optim.SGD(net.parameters(), lr=lr)
     loss = nn.CrossEntropyLoss()
