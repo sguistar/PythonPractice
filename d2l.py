@@ -1,13 +1,34 @@
-<<<<<<< HEAD
-from matplotlib import pyplot as plt
-=======
+from torchvision import transforms
+from torch.utils import data
+from torch.nn import functional as F
+import torchvision
+import torch
+import numpy as np
+from matplotlib_inline import backend_inline
+from IPython import display
+import requests
+import pandas as pd
+import zipfile
+import time
+import tarfile
+import sys
+import shutil
+import re
+import random
+import os
+import math
+import hashlib
+import collections
+from torch import nn
 import matplotlib.pyplot as plt
->>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
+from matplotlib import pyplot as plt
+<< << << < HEAD
+== == == =
+>>>>>> > 608b013763b2ed417661956dade1e40f3d3a3c77
 
 DATA_HUB = dict()
 DATA_URL = 'http://d2l-data.s3-accelerate.amazonaws.com/'
 
-from torch import nn
 
 nn_Module = nn.Module
 
@@ -16,31 +37,8 @@ nn_Module = nn.Module
 #    d2lbook build lib
 # Don't edit it directly
 
-import collections
-import hashlib
-import math
-import os
-import random
-import re
-import shutil
-import sys
-import tarfile
-import time
-import zipfile
-import pandas as pd
-import requests
-from IPython import display
-from matplotlib_inline import backend_inline
 
 d2l = sys.modules[__name__]
-
-import numpy as np
-import torch
-import torchvision
-from torch import nn
-from torch.nn import functional as F
-from torch.utils import data
-from torchvision import transforms
 
 
 def use_svg_display():
@@ -543,11 +541,7 @@ def train_ch6(net, train_iter, test_iter, num_epochs, lr, device):
     print(f'loss {train_l:.3f}, train acc {train_acc:.3f}, '
           f'test acc {test_acc:.3f}')
     print(f'{metric[2] * num_epochs / timer.sum():.1f} examples/sec '
-<<<<<<< HEAD
           f'on {torch.cuda.get_device_name()}')
-=======
-          f'on {str(device)}')
->>>>>>> 608b013763b2ed417661956dade1e40f3d3a3c77
 
 
 class Residual(nn.Module):
@@ -766,7 +760,7 @@ def predict_ch8(prefix, num_preds, net, vocab, device):
     Defined in :numref:`sec_rnn_scratch`"""
     state = net.begin_state(batch_size=1, device=device)
     outputs = [vocab[prefix[0]]]
-    get_input = lambda: d2l.reshape(d2l.tensor(
+    def get_input(): return d2l.reshape(d2l.tensor(
         [outputs[-1]], device=device), (1, 1))
     for y in prefix[1:]:  # 预热期
         _, state = net(get_input(), state)
@@ -839,8 +833,9 @@ def train_ch8(net, train_iter, vocab, lr, num_epochs, device,
     if isinstance(net, nn.Module):
         updater = torch.optim.SGD(net.parameters(), lr)
     else:
-        updater = lambda batch_size: d2l.sgd(net.params, lr, batch_size)
-    predict = lambda prefix: predict_ch8(prefix, 50, net, vocab, device)
+        def updater(batch_size): return d2l.sgd(net.params, lr, batch_size)
+
+    def predict(prefix): return predict_ch8(prefix, 50, net, vocab, device)
     # 训练和预测
     for epoch in range(num_epochs):
         ppl, speed = train_epoch_ch8(
@@ -891,9 +886,9 @@ class RNNModel(nn.Module):
             return (torch.zeros((
                 self.num_directions * self.rnn.num_layers,
                 batch_size, self.num_hiddens), device=device),
-                    torch.zeros((
-                        self.num_directions * self.rnn.num_layers,
-                        batch_size, self.num_hiddens), device=device))
+                torch.zeros((
+                    self.num_directions * self.rnn.num_layers,
+                    batch_size, self.num_hiddens), device=device))
 
 
 d2l.DATA_HUB['fra-eng'] = (d2l.DATA_URL + 'fra-eng.zip',
@@ -1205,7 +1200,7 @@ def show_heatmaps(matrices, xlabel, ylabel, titles=None, figsize=(2.5, 2.5),
                 ax.set_ylabel(ylabel)
             if titles:
                 ax.set_title(titles[j])
-    fig.colorbar(pcm, ax=axes, shrink=0.6);
+    fig.colorbar(pcm, ax=axes, shrink=0.6)
 
 
 def masked_softmax(X, valid_lens):
@@ -1370,7 +1365,7 @@ class PositionalEncoding(nn.Module):
         self.P = d2l.zeros((1, max_len, num_hiddens))
         X = d2l.arange(max_len, dtype=torch.float32).reshape(
             -1, 1) / torch.pow(10000, torch.arange(
-            0, num_hiddens, 2, dtype=torch.float32) / num_hiddens)
+                0, num_hiddens, 2, dtype=torch.float32) / num_hiddens)
         self.P[:, :, 0::2] = torch.sin(X)
         self.P[:, :, 1::2] = torch.cos(X)
 
@@ -1789,8 +1784,8 @@ def box_iou(boxes1, boxes2):
     """计算两个锚框或边界框列表中成对的交并比
 
     Defined in :numref:`sec_anchor`"""
-    box_area = lambda boxes: ((boxes[:, 2] - boxes[:, 0]) *
-                              (boxes[:, 3] - boxes[:, 1]))
+    def box_area(boxes): return ((boxes[:, 2] - boxes[:, 0]) *
+                                 (boxes[:, 3] - boxes[:, 1]))
     # boxes1,boxes2,areas1,areas2的形状:
     # boxes1：(boxes1的数量,4),
     # boxes2：(boxes2的数量,4),
@@ -1904,7 +1899,8 @@ def nms(boxes, scores, iou_threshold):
     while B.numel() > 0:
         i = B[0]
         keep.append(i)
-        if B.numel() == 1: break
+        if B.numel() == 1:
+            break
         iou = box_iou(boxes[i, :].reshape(-1, 4),
                       boxes[B[1:], :].reshape(-1, 4)).reshape(-1)
         inds = torch.nonzero(iou <= iou_threshold).reshape(-1)
@@ -1958,14 +1954,14 @@ def read_data_bananas(is_train=True):
     Defined in :numref:`sec_object-detection-dataset`"""
     data_dir = d2l.download_extract('banana-detection')
     csv_fname = os.path.join(data_dir, 'bananas_train' if is_train
-    else 'bananas_val', 'label.csv')
+                             else 'bananas_val', 'label.csv')
     csv_data = pd.read_csv(csv_fname)
     csv_data = csv_data.set_index('img_name')
     images, targets = [], []
     for img_name, target in csv_data.iterrows():
         images.append(torchvision.io.read_image(
             os.path.join(data_dir, 'bananas_train' if is_train else
-            'bananas_val', 'images', f'{img_name}')))
+                         'bananas_val', 'images', f'{img_name}')))
         # 这里的target包含（类别，左上角x，左上角y，右下角x，右下角y），
         # 其中所有图像都具有相同的香蕉类（索引为0）
         targets.append(list(target))
@@ -2591,20 +2587,20 @@ def _pad_bert_inputs(examples, max_len, vocab):
     for (token_ids, pred_positions, mlm_pred_label_ids, segments,
          is_next) in examples:
         all_token_ids.append(torch.tensor(token_ids + [vocab['<pad>']] * (
-                max_len - len(token_ids)), dtype=torch.long))
+            max_len - len(token_ids)), dtype=torch.long))
         all_segments.append(torch.tensor(segments + [0] * (
-                max_len - len(segments)), dtype=torch.long))
+            max_len - len(segments)), dtype=torch.long))
         # valid_lens不包括'<pad>'的计数
         valid_lens.append(torch.tensor(len(token_ids), dtype=torch.float32))
         all_pred_positions.append(torch.tensor(pred_positions + [0] * (
-                max_num_mlm_preds - len(pred_positions)), dtype=torch.long))
+            max_num_mlm_preds - len(pred_positions)), dtype=torch.long))
         # 填充词元的预测将通过乘以0权重在损失中过滤掉
         all_mlm_weights.append(
             torch.tensor([1.0] * len(mlm_pred_label_ids) + [0.0] * (
-                    max_num_mlm_preds - len(pred_positions)),
-                         dtype=torch.float32))
+                max_num_mlm_preds - len(pred_positions)),
+                dtype=torch.float32))
         all_mlm_labels.append(torch.tensor(mlm_pred_label_ids + [0] * (
-                max_num_mlm_preds - len(mlm_pred_label_ids)), dtype=torch.long))
+            max_num_mlm_preds - len(mlm_pred_label_ids)), dtype=torch.long))
         nsp_labels.append(torch.tensor(is_next, dtype=torch.long))
     return (all_token_ids, all_segments, valid_lens, all_pred_positions,
             all_mlm_weights, all_mlm_labels, nsp_labels)
@@ -2671,7 +2667,7 @@ def _get_batch_loss_bert(net, loss, vocab_size, tokens_X,
                                   pred_positions_X)
     # 计算遮蔽语言模型损失
     mlm_l = loss(mlm_Y_hat.reshape(-1, vocab_size), mlm_Y.reshape(-1)) * \
-            mlm_weights_X.reshape(-1, 1)
+        mlm_weights_X.reshape(-1, 1)
     mlm_l = mlm_l.sum() / (mlm_weights_X.sum() + 1e-8)
     # 计算下一句子预测任务的损失
     nsp_l = loss(nsp_Y_hat, nsp_y)
@@ -2751,11 +2747,11 @@ def read_snli(data_dir, is_train):
 
     label_set = {'entailment': 0, 'contradiction': 1, 'neutral': 2}
     file_name = os.path.join(data_dir, 'snli_1.0_train.txt'
-    if is_train else 'snli_1.0_test.txt')
+                             if is_train else 'snli_1.0_test.txt')
     with open(file_name, 'r') as f:
         rows = [row.split('\t') for row in f.readlines()[1:]]
     premises = [extract_text(row[1]) for row in rows if row[0] in label_set]
-    hypotheses = [extract_text(row[2]) for row in rows if row[0] \
+    hypotheses = [extract_text(row[2]) for row in rows if row[0]
                   in label_set]
     labels = [label_set[row[0]] for row in rows if row[0] in label_set]
     return premises, hypotheses, labels
@@ -2771,7 +2767,7 @@ class SNLIDataset(torch.utils.data.Dataset):
         all_premise_tokens = d2l.tokenize(dataset[0])
         all_hypothesis_tokens = d2l.tokenize(dataset[1])
         if vocab is None:
-            self.vocab = d2l.Vocab(all_premise_tokens + \
+            self.vocab = d2l.Vocab(all_premise_tokens +
                                    all_hypothesis_tokens, min_freq=5, reserved_tokens=['<pad>'])
         else:
             self.vocab = vocab
