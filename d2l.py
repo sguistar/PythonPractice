@@ -22,9 +22,6 @@ import collections
 from torch import nn
 import matplotlib.pyplot as plt
 from matplotlib import pyplot as plt
-<< << << < HEAD
-== == == =
->>>>>> > 608b013763b2ed417661956dade1e40f3d3a3c77
 
 DATA_HUB = dict()
 DATA_URL = 'http://d2l-data.s3-accelerate.amazonaws.com/'
