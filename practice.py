@@ -7,10 +7,10 @@ face_detector = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_front
 
 # 2. 加载关键点检测器
 facemark = cv2.face.createFacemarkLBF()
-facemark.loadModel("lbfmodel.yaml")
+facemark.loadModel(r"D:\PycharmProjects\class practice\lbfmodel.yaml")
 
 # ------------------ 参考人脸 ------------------
-image1 = cv2.imread("face1.jpg")
+image1 = cv2.imread(r"D:\PycharmProjects\class practice\face1.jpg")
 gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
 
 faces1 = face_detector.detectMultiScale(gray1, 1.3, 5)
@@ -28,7 +28,7 @@ print("refpoints:", refpoints)
 h, w = image1.shape[:2]
 
 # ------------------ 待对齐人脸 ------------------
-image2 = cv2.imread("test.jpg")
+image2 = cv2.imread(r"D:\PycharmProjects\class practice\test.jpg")
 gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 
 faces2 = face_detector.detectMultiScale(gray2, 1.3, 5)
