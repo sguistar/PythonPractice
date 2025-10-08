@@ -13,7 +13,7 @@ import torch
 import torch.nn as nn
 from typing import Type, List, Optional
 
-__all__ = ["ResNet", "Bottleneck", "resnet18","resnet50","resnet101","resnet150","resnet200"]
+__all__ = ["ResNet", "Bottleneck", "resnet18","resnet50","resnet101","resnet152","resnet200"]
 
 
 def conv3x3(
@@ -312,7 +312,7 @@ def resnet101(
         stem_type=stem_type,
     )
     
-def resnet150(
+def resnet152(
     num_classes: int = 1000,
     zero_init_residual: bool = False,
     groups: int = 1,
