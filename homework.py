@@ -1,23 +1,23 @@
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
+import math
+import torch
+from torch import nn
+import d2l
 
-img = cv2.imread('img.jpg')
+#@save
+def masked_softmax(X, valid_lens):
+    """通过在最后一个轴上掩蔽元素来执行softmax操作"""
+    # X:3D张量，valid_lens:1D或2D张量
+    if valid_lens is None:
+        return nn.functional.softmax(X, dim=-1)
+    else:
+        shape = X.shape
+        if valid_lens.dim() == 1:
+            valid_lens = torch.repeat_interleave(valid_lens, shape[1])
+        else:
+            valid_lens = valid_lens.reshape(-1)
+        # 最后一轴上被掩蔽的元素使用一个非常大的负值替换，从而其softmax输出为0
+        X = d2l.sequence_mask(X.reshape(-1, shape[-1]), valid_lens,
+                              value=-1e6)
+        return nn.functional.softmax(X.reshape(shape), dim=-1)
 
-# 长宽放大 2 倍
-img_x2 = cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_LINEAR)
-
-cv2.imwrite('1_x2.jpg', img_x2)
-cv2.imshow('Scale x2', img_x2)
-cv2.waitKey()
-
-# 水平翻折
-img_flip = cv2.flip(img, 1)
-
-cv2.imwrite('1_1.jpg', img_flip)
-cv2.imshow('Flip Horizontal', img_flip)
-cv2.waitKey()
-cv2.destroyAllWindows()
-
-
-
+print(masked_softmax(torch.rand(2, 2, 4), torch.tensor([2, 3])))
