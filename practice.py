@@ -69,8 +69,8 @@ if aligned_faces:
     # 将所有裁剪结果缩放为统一大小
     resized_faces = [cv2.resize(face, (200, 200)) for face in aligned_faces]
     combined = cv2.hconcat(resized_faces)
-    cv2.imwrite('new_adjusted.jpg', combined)
-    print("All faces saved to new_adjusted.jpg")
+    aligned_img = cv2.imwrite('new_adjusted.jpg', combined)
+    print(f"All faces saved to {aligned_img}")
 else:
     print("No faces detected.")
 
