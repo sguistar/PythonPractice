@@ -62,7 +62,7 @@ def parse(text):
              '登记时间': tds[6].get_text(strip=True)}
         detail_a = tds[7].find('a')
         if detail_a and detail_a.has_attr('href'):
-            h['详细信息'] = 'https://www.lgfdcw.com/cz/' + detail_a['href']
+            h['详细信息'] = 'https://www.lgfdcw.com/cs/' + detail_a['href']
         else:
             h['详细信息'] = None
         houses.append(h)
@@ -74,13 +74,12 @@ def saveData(data):  # 保存数据
         data, columns=['详细地址', '区域', '房型', '户型', '租金', '面积(m²)', '登记时间', '详细信息'])
     df['面积(m²)'] = df['面积(m²)'].str.replace('[㎡�O]', '', regex=True)
     df.to_excel('rental houses.xlsx', index=False)
-    df.to_csv('rental houses.csv',index=False)
 
 
 if __name__ == "__main__":
     all_houses = []
     for i in range(1, 31):  # 爬取1-30页
-        url = f'https://www.lgfdcw.com/cz/index.php?userid=&infotype=&dq=&fwtype=&hx=&price01=&price02=&pricetype=&fabuday=&addr=&PageNo={i}'
+        url = f'https://www.lgfdcw.com/cs/index.php?userid=&infotype=&dq=&fwtype=&hx=&price01=&price02=&pricetype=&fabuday=&addr=&PageNo={i}'
         text = getHTMLText(url)
         time.sleep(random.randint(1, 3))  # 随机休眠1-3秒，防止被封IP
         houses = parse(text)
