@@ -9,7 +9,7 @@ import pandas as pd
 
 def parser_html(html):
     soup = BeautifulSoup(html, 'html.parser')
-    trs=soup.find('tbody').children
+    trs = soup.find('tbody').children
     # print(len(trs))
     universities = []
     for tr in trs:
@@ -18,8 +18,8 @@ def parser_html(html):
         name_cn = tds[1].find_all(
             'span', attrs={'class': 'name-cn'})[0].string.strip()  # 中文名称
         name_en = tds[1].find_all(
-            'span', attrs={'class': 'name-en'})[0].string.strip()  # 学校类型
-        if len(tds[1].find_all('p', attrs={'class': 'tags'})) == 0:
+            'span', attrs={'class': 'name-en'})[0].string.strip()  # 英文名称
+        if len(tds[1].find_all('p', attrs={'class': 'tags'})) == 0:  # 学校层次
             school_type = ''
         else:
             school_type = tds[1].find_all('p', attrs={'class': 'tags'})[
