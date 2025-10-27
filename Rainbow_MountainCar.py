@@ -111,6 +111,7 @@ class RainbowAgent:
         self.env = env
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         print(self.device)
+        print(torch.cuda.get_device_name(0))
         self.policy_net = DuelingDQN(obs_dim, n_actions).to(self.device)
         self.target_net = DuelingDQN(obs_dim, n_actions).to(self.device)
         self.target_net.load_state_dict(self.policy_net.state_dict())
@@ -191,3 +192,4 @@ if __name__ == '__main__':
     agent = RainbowAgent(env)
     agent.train()
     env.close()
+    
