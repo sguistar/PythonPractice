@@ -1,3 +1,4 @@
 {
-    "checksums.autoFix": true
+    "checksums.autoFix": true,
+    "python.analysis.autoImportCompletions": true
 }
