@@ -1,5 +1,5 @@
 {
-    "checksums.autoFix": true,
+    "checksums.autoFix": false,
     "python.analysis.autoImportCompletions": true,
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true,
