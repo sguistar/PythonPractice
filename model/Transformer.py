@@ -294,7 +294,7 @@ class TranslationCorpus:
 # print(f'device: {device}')
 # print(f'Training on {device_name}')
 
-# epochs = 5000  # 训练轮次
+# epochs = 2500  # 训练轮次
 # for epoch in range(epochs):  # 训练 100 轮
 #     optimizer.zero_grad()  # 梯度清零
 #     enc_inputs, dec_inputs, target_batch = corpus.make_batch(
