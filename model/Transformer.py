@@ -284,71 +284,71 @@ class TranslationCorpus:
         return input_batch, output_batch, target_batch
 
 
-# 创建语料库类实例
-corpus = TranslationCorpus(text)
-model = Transformer(corpus)  # 创建模型实例
-criterion = nn.CrossEntropyLoss()  # 损失函数
-optimizer = optim.Adam(model.parameters(), lr=0.0001,weight_decay=0.0001)  # 优化器
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-device_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU"
-print(f'device: {device}')
-print(f'Training on {device_name}')
+# # 创建语料库类实例
+# corpus = TranslationCorpus(text)
+# model = Transformer(corpus)  # 创建模型实例
+# criterion = nn.CrossEntropyLoss()  # 损失函数
+# optimizer = optim.Adam(model.parameters(), lr=0.0001,weight_decay=0.0001)  # 优化器
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "CPU"
+# print(f'device: {device}')
+# print(f'Training on {device_name}')
 
-epochs = 5000  # 训练轮次
-for epoch in range(epochs):  # 训练 100 轮
-    optimizer.zero_grad()  # 梯度清零
-    enc_inputs, dec_inputs, target_batch = corpus.make_batch(
-        batch_size)  # 创建训练数据
-    outputs, _, _, _ = model(enc_inputs, dec_inputs)  # 获取模型输出
-    loss = criterion(outputs.view(-1, len(corpus.tgt_vocab)),
-                     target_batch.view(-1))  # 计算损失
-    if (epoch + 1) % 100 == 0:  # 打印损失
-        print(f"Epoch: {epoch + 1:04d} cost = {loss:.6f}")
-    loss.backward()  # 反向传播
-    optimizer.step()  # 更新参数
+# epochs = 5000  # 训练轮次
+# for epoch in range(epochs):  # 训练 100 轮
+#     optimizer.zero_grad()  # 梯度清零
+#     enc_inputs, dec_inputs, target_batch = corpus.make_batch(
+#         batch_size)  # 创建训练数据
+#     outputs, _, _, _ = model(enc_inputs, dec_inputs)  # 获取模型输出
+#     loss = criterion(outputs.view(-1, len(corpus.tgt_vocab)),
+#                      target_batch.view(-1))  # 计算损失
+#     if (epoch + 1) % 100 == 0:  # 打印损失
+#         print(f"Epoch: {epoch + 1:04d} cost = {loss:.6f}")
+#     loss.backward()  # 反向传播
+#     optimizer.step()  # 更新参数
 
 
-# 替换你的整个测试（推理）代码块 (从 307 行开始)
+# # 替换你的整个测试（推理）代码块 (从 307 行开始)
 
-print("======== 开始翻译测试 ========")
-test_enc_inputs, _, _ = corpus.make_batch(batch_size=1)  # 采样一个句子
+# print("======== 开始翻译测试 ========")
+# test_enc_inputs, _, _ = corpus.make_batch(batch_size=1)  # 采样一个句子
 
-# 初始化解码器输入，以 <sos> token 开始
-# 确保它是 [batch_size, seq_len] = [1, 1] 的形状
-dec_inputs = torch.LongTensor([[corpus.tgt_vocab['<sos>']]])
+# # 初始化解码器输入，以 <sos> token 开始
+# # 确保它是 [batch_size, seq_len] = [1, 1] 的形状
+# dec_inputs = torch.LongTensor([[corpus.tgt_vocab['<sos>']]])
 
-preds = []
-max_len = 15  # 设置最大生成长度，防止死循环
+# preds = []
+# max_len = 15  # 设置最大生成长度，防止死循环
 
-for _ in range(max_len):
-    # 1. 将当前的 [1, L] 输入送入模型
-    dec_out, _, _, _ = model(test_enc_inputs, dec_inputs)
+# for _ in range(max_len):
+#     # 1. 将当前的 [1, L] 输入送入模型
+#     dec_out, _, _, _ = model(test_enc_inputs, dec_inputs)
 
-    # 2. 获取最后一个时间步的 logits [1, L, V] -> [1, V]
-    last_token_logits = dec_out[:, -1, :]
+#     # 2. 获取最后一个时间步的 logits [1, L, V] -> [1, V]
+#     last_token_logits = dec_out[:, -1, :]
 
-    # 3. 找到概率最高的 token 索引
-    # .max() 返回 (values, indices)
-    # keepdim=True 保持形状为 [1, 1]，以便于拼接
-    pred_idx = last_token_logits.data.max(1, keepdim=True)[1]
+#     # 3. 找到概率最高的 token 索引
+#     # .max() 返回 (values, indices)
+#     # keepdim=True 保持形状为 [1, 1]，以便于拼接
+#     pred_idx = last_token_logits.data.max(1, keepdim=True)[1]
 
-    next_token_idx = pred_idx.item()
+#     next_token_idx = pred_idx.item()
 
-    # 4. 如果是 <eos>，则停止
-    if corpus.tgt_idx2word[next_token_idx] == '<eos>':
-        break
+#     # 4. 如果是 <eos>，则停止
+#     if corpus.tgt_idx2word[next_token_idx] == '<eos>':
+#         break
 
-    preds.append(next_token_idx)
+#     preds.append(next_token_idx)
 
-    # 5. 自动回归：将预测的 token 拼接到 dec_inputs
-    # [1, L] + [1, 1] -> [1, L+1]
-    dec_inputs = torch.cat([dec_inputs, pred_idx], dim=1)
+#     # 5. 自动回归：将预测的 token 拼接到 dec_inputs
+#     # [1, L] + [1, 1] -> [1, L+1]
+#     dec_inputs = torch.cat([dec_inputs, pred_idx], dim=1)
 
-# 打印结果
-translated_sentence = [corpus.tgt_idx2word[idx] for idx in preds]
-# 过滤掉 <pad> token，它们不应该出现在源句子中
-input_sentence = ' '.join([corpus.src_idx2word[idx.item(
-)] for idx in test_enc_inputs[0] if idx.item() != corpus.src_vocab['<pad>']])
+# # 打印结果
+# translated_sentence = [corpus.tgt_idx2word[idx] for idx in preds]
+# # 过滤掉 <pad> token，它们不应该出现在源句子中
+# input_sentence = ' '.join([corpus.src_idx2word[idx.item(
+# )] for idx in test_enc_inputs[0] if idx.item() != corpus.src_vocab['<pad>']])
 
-print(f"源句: {input_sentence}")
-print(f"译句: {' '.join(translated_sentence)}")
+# print(f"源句: {input_sentence}")
+# print(f"译句: {' '.join(translated_sentence)}")
