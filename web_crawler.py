@@ -1,89 +1,114 @@
-import requests
-from bs4 import BeautifulSoup
 import time
-import random
-import pandas as pd
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 
-def getHTMLText(url):  # 抓取页面文本
-    try:
-        h = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"
-        }
-        r = requests.get(url, headers=h, timeout=10)
-        print(r.status_code, r.reason, "->", url)
-        r.raise_for_status()
-        r.encoding = 'gb2312'
-        print(
-            f"Success fetching the page.\n Start crawling...  \n URL: {r.url} \n Encoding: {r.encoding}"
-        )
-        return r.text
-    except requests.RequestException as e:
-        print(f"Error fetching {url}: {e}")
-        return ""
 
 
-def getHTMLImg(url):  # 抓取页面图片
-    try:
-        h = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"
-        }
-        r = requests.get(url, headers=h, timeout=10)
-        print(r.status_code)
-        print(r.reason)
-        r.raise_for_status()
-        r.encoding = r.apparent_encoding
-        print(
-            f"Success fetching the page.\n Start crawling...  \n URL: {r.url} \n Encoding: {r.encoding} \n"
-        )
-        return r.content
-    except requests.RequestException as e:
-        print(f"Error fetching {url}: {e}")
-        return ""
 
 
-def parse(text):
-    soup = BeautifulSoup(text, 'lxml')
-    # 同时抓白色行和灰色行
-    tr_list = soup.find_all('tr', attrs={'bgcolor': ['#f4f4f4', '#ffffff']})
-    print(len(tr_list))
-    houses = []
-    for tr in tr_list:
-        tds = tr.find_all('td')
-        if len(tds) < 8:
-            continue
-        a = tds[0].find('a', target="_blank")
-        h = {'详细地址': a.get_text(strip=True) if a else None,
-             '区域': tds[1].get_text(strip=True),
-             '房型': tds[2].get_text(strip=True),
-             '户型': tds[3].get_text(strip=True),
-             '租金': tds[4].get_text(strip=True),
-             '面积(m²)': tds[5].get_text(strip=True),
-             '登记时间': tds[6].get_text(strip=True)}
-        detail_a = tds[7].find('a')
-        if detail_a and detail_a.has_attr('href'):
-            h['详细信息'] = 'https://www.lgfdcw.com/cs/' + detail_a['href']
-        else:
-            h['详细信息'] = None
-        houses.append(h)
-    return houses
 
 
-def saveData(data):  # 保存数据
-    df = pd.DataFrame(
-        data, columns=['详细地址', '区域', '房型', '户型', '租金', '面积(m²)', '登记时间', '详细信息'])
-    df['面积(m²)'] = df['面积(m²)'].str.replace('[㎡�O]', '', regex=True)
-    df.to_excel('rental houses.xlsx', index=False)
 
 
-if __name__ == "__main__":
-    all_houses = []
-    for i in range(1, 31):  # 爬取1-30页
-        url = f'https://www.lgfdcw.com/cs/index.php?userid=&infotype=&dq=&fwtype=&hx=&price01=&price02=&pricetype=&fabuday=&addr=&PageNo={i}'
-        text = getHTMLText(url)
-        time.sleep(random.randint(1, 3))  # 随机休眠1-3秒，防止被封IP
-        houses = parse(text)
-        all_houses.extend(houses)
-    saveData(all_houses)
-    print('爬取完成！')
-    print('数据保存完成！')
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    driver = webdriver.Edge()
+    url = 'https://spa5.scrape.center/'
+    driver.get(url)
+    time.sleep(5)
+    for page in range(1, 3):
+        for i in range(1, 19):
+            book_img_xpath = f'//*[@id="index"]/div[1]/div/div/div[{i}]/div/div/div[1]/div/a/img' # 书籍图片
+            book_arthor_xpath = f'//*[@id="index"]/div[1]/div/div/div[{i}]/div/div/div[2]/div/p' # 书籍作者
+            book_name_xpath = f'//*[@id="index"]/div[1]/div/div/div[{i}]/div/div/div[2]/div[1]/a' # 书籍名称
+            book_link_xpath = f'//*[@id="index"]/div[1]/div/div/div[{i}]/div/div/div[2]/div[1]/a' # 书籍链接
+            book_link = driver.find_element(By.XPATH, book_link_xpath).get_attribute('href')
+            print(f'book_link:{book_link}')
+            # book_arthor = driver.find_element(By.XPATH, book_arthor_xpath).text if book_arthor_xpath is not None else '无作者信息'
+            if driver.find_elements(By.XPATH, book_arthor_xpath):
+                book_arthor = driver.find_element(By.XPATH, book_arthor_xpath).text
+            else:
+                book_arthor = 'None'
+            print(f'book_arthor:{book_arthor}')
+            book_name = driver.find_element(By.XPATH, book_name_xpath).text
+            print(f'book_name:{book_name}')
+            book_img_url = driver.find_element(By.XPATH, book_img_xpath).get_attribute('src')
+            print(f'book_img_url:{book_img_url}')
+            driver.get(book_link)
+            time.sleep(10)
+            #rating = driver.find_element(By.XPATH, '//*[@id="detail"]/div[2]/div/div[1]/div[2]/div[2]/div').text
+            if driver.find_elements(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/a/span'):
+                rating = driver.find_element(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/a/span').text
+            else:
+                rating = 'None'
+            print(f'rating:{rating}')
+            
+            if driver.find_elements(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/p'):
+                book_intro = driver.find_element(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/p').text
+            else:
+                book_intro = 'None'
+            print(f'book_intro:{book_intro}')
+            
+            if driver.find_elements(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/div[1]'):
+                book_tags = driver.find_element(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/div[1]').text
+            else:
+                book_tags = 'None'
+            print(f'book_tags:{book_tags}')
+            
+            if driver.find_elements(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/div[2]/p[1]'):
+                book_price = driver.find_element(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/div[2]/p[1]').text
+            else:
+                book_price = 'None'
+            print(f'book_price:{book_price}')
+            
+            if driver.find_elements(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/div[2]/p[3]'):
+                published_time = driver.find_element(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/div[2]/p[3]').text
+            else:
+                published_time = 'None'
+            print(f'published_time:{published_time}')
+            
+            if driver.find_elements(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/div[2]/p[4]'):
+                publisher = driver.find_element(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/div[2]/p[4]').text
+            else:
+                publisher = 'None'
+            print(f'publisher:{publisher}')
+            
+            if driver.find_elements(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/div[2]/p[5]'):
+                total_pages = driver.find_element(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/div[2]/p[5]').text
+            else:
+                total_pages = 'None'
+            print(f'total_pages:{total_pages}')
+            
+            if driver.find_elements(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/div[2]/p[6]'):
+                ISBM = driver.find_element(By.XPATH, '//*[@id="detail"]/div[1]/div/div/div[1]/div/div[1]/div[2]/p[6]').text
+            else:
+                ISBM = 'None'
+            print(f'ISBM:{ISBM}')
+            
+            with open('books.txt', 'a', encoding='utf-8') as f:
+                f.write(f'{book_arthor},{book_name},{book_link},{book_img_url},{rating},{book_intro},{book_tags},{book_price},{published_time},{publisher},{total_pages},{ISBM}\n')
+            
+            driver.back()
+            time.sleep(10)
+            
+            
+        # 点击下一页
+        next_page_xpath = f'//*[@id="index"]/div[2]/div/div/div/button[2]/i'
+        next_page = driver.find_element(By.XPATH, next_page_xpath)
+        next_page.click()
+        time.sleep(5)
+    
+    
+    
