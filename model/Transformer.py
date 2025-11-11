@@ -46,12 +46,9 @@ class MultiHeadAttention(nn.Module):
         k_s = self.W_K(k).view(batch_size, -1, n_heads, d_k).transpose(1, 2)
         v_s = self.W_V(v).view(batch_size, -1, n_heads, d_v).transpose(1, 2)
 
-        attn_mask = attn_mask.unsqueeze(1).repeat(
-            1, n_heads, 1, 1) if attn_mask is not None else None
-        context, weights = ScaleDotProductAttention()(
-            q_s, k_s, v_s, attn_mask=attn_mask)
-        context = context.transpose(1, 2).contiguous().view(
-            batch_size, -1, n_heads * d_v)
+        attn_mask = attn_mask.unsqueeze(1).repeat(1, n_heads, 1, 1) if attn_mask is not None else None
+        context, weights = ScaleDotProductAttention()(q_s, k_s, v_s, attn_mask=attn_mask)
+        context = context.transpose(1, 2).contiguous().view(batch_size, -1, n_heads * d_v)
 
         output = self.layer_norm(context + residual)
         output = self.linear(output)
@@ -62,10 +59,8 @@ class MultiHeadAttention(nn.Module):
 class PositionFeedForwardNet(nn.Module):
     def __init__(self, d_ff=2048):
         super(PositionFeedForwardNet, self).__init__()
-        self.conv1 = nn.Conv1d(in_channels=d_embedding,
-                               out_channels=d_ff, kernel_size=1)
-        self.conv2 = nn.Conv1d(
-            in_channels=d_ff, out_channels=d_embedding, kernel_size=1)
+        self.conv1 = nn.Conv1d(in_channels=d_embedding, out_channels=d_ff, kernel_size=1)
+        self.conv2 = nn.Conv1d(in_channels=d_ff, out_channels=d_embedding, kernel_size=1)
         self.layer_norm = nn.LayerNorm(d_embedding)
 
     def forward(self, inputs):
