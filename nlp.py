@@ -1,62 +1,8 @@
-def FMM(dt, s):  # 正向最大匹配算法 start -> end
-    result = []
-    max_len = max([len(i) for i in dt])  # 选取字典里长度最大的字符串
-    start = 0
-    while start != len(s):  # 判断列表不为空，建立循环
-        index = start + max_len  # 从0开始正向索引最大长度的字符串
-        if index > len(s):  # 判断是否溢出列表
-            index = len(s)
-        for _ in range(max_len):
-            t = s[start:index]  # t是切片
-            if t in dt or len(t) == 1:
-                result.append(t)
-                start = index
-                break
-            index -= 1  # 为了保证算法能够扫描到所有字符
-    return result
+import jieba.analyse as analyse
 
-
-def RMM(dt, s):  # 反向最大匹配算法 end -> start
-    result = []
-    max_len = max([len(i) for i in dt])  # 选取字典里长度最大的字符串
-    start = len(s)
-    while start != 0:  # 判断列表不为空，建立循环
-        index = start - max_len  # 从列表最后开始索引最大长度的字符串
-        if index < 0:  # 判断是否溢出列表
-            index = 0
-        for _ in range(max_len):
-            t = s[index:start]  # t是切片
-            if t in dt or len(t) == 1:
-                result.insert(0, t)  # 在最前面插入
-                start = index
-                break
-            index += 1
-    return result
-
-
-def BM(dt, s):  # 双向最大切词
-    r1 = FMM(dt, s)
-    r2 = RMM(dt, s)
-    if len(r1) == len(r2):
-        if r1 == r2:
-            return r1
-        else:
-            r1_cnt = len([i for i in r1 if len(i) == 1])
-            r2_cnt = len([i for i in r2 if len(i) == 1])
-            return r1 if r1_cnt < r2_cnt else r2
-    else:
-        return r1 if len(r1) < len(r2) else r2
-
-
-dt1 = ["研究", "研究生", "生命", "命", "的", "起源"]
-s1 = "研究生命的起源"
-
-dt2 = ["I", "like", "sam", "sung", "samsung", "mobile", "ice", "cream"]
-s2 = "Ilikesamsungmobileicecream"
-print(FMM(dt1, s1))
-print(RMM(dt1, s1))
-print(BM(dt1, s1))
-
-print(FMM(dt2, s2))
-print(RMM(dt2, s2))
-print(BM(dt2, s2))
+key_word_num = 5
+text = '记者从国家文物局获悉，截至3月15日，19个省（区、市）180多家博物馆在做好疫情防控工作的前提下恢复对外开放，其中19家为一级博物馆。另外，沈阳故宫博物院、新四军江南指挥部纪念馆、金沙遗址博物馆等将于3月17日陆续恢复开放。随着疫情防控形势好转，各地博物馆、纪念馆等陆续恢复开放。记者从各恢复开放博物馆发布的公告获悉，各恢复开放博物馆对疫情防控期间参观观众在提前预约、测量体温等提出了明确要求，并提醒观众做好个人防护。2月27日，国家文物局发布《关于新冠肺炎疫情防控期间有序推进文博单位恢复开放和复工的指导意见》强调，有序恢复开放文物、博物馆单位，各文物、博物馆开放单位可采取网上实名预约、总量控制、分时分流、语音讲解、数字导览等措施，减少人员聚集。'
+key_words = analyse.textrank(text, topK=key_word_num)
+print("Top 5 keywords: " + ", ".join(key_words))
+key_words = analyse.extract_tags(text, topK=key_word_num)
+print("Top 5 keywords: " + ", ".join(key_words))

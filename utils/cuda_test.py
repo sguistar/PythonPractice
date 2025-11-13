@@ -16,7 +16,6 @@ if torch.cuda.is_available():
 # 创建简单张量测试
 x = torch.randn(3, 4)
 print(f"测试张量: {x}")
-
 # GPU 测试（如果可用）
 if torch.cuda.is_available():
     x_gpu = x.cuda()
