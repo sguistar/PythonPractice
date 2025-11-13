@@ -305,5 +305,6 @@ class RSSM:
         
         return hiddens, prior_states, posterior_states, prior_means, prior_logvars, posterior_means, posterior_logvars
     
-    
+
+
         
