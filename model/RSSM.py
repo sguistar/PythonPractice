@@ -158,6 +158,8 @@ class DynamicsModel(nn.Module):
         super(DynamicsModel, self).__init__()
 
         self.hidden_dim = hidden_dim
+        self.state_dim = state_dim
+        self.act_fn = nn.ReLU()
         
         # Can be any recurrent network
         self.rnn = nn.ModuleList([nn.GRUCell(hidden_dim, hidden_dim) for _ in range(rnn_layer)])
@@ -173,9 +175,7 @@ class DynamicsModel(nn.Module):
         self.posterior = nn.Linear(hidden_dim, state_dim * 2)
         self.project_hidden_obs = nn.Linear(hidden_dim + embedding_dim, hidden_dim)
 
-        self.state_dim = state_dim
-
-        self.act_fn = nn.ReLU()
+        
 
     def forward(self, prev_hidden: torch.Tensor, prev_state: torch.Tensor, actions: torch.Tensor,
                 obs: torch.Tensor = None, dones: torch.Tensor = None):
