@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 import matplotlib.pyplot as plt
 
-import d2l
+import utils.d2l as d2l
 
 
 # @save
