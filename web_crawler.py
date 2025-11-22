@@ -2,7 +2,6 @@ from selenium import webdriver
 from time import sleep
 from selenium.webdriver.common.by import By
 
-
 # 按间距中的绿色按钮以运行脚本。
 if __name__ == '__main__':
     n = 1
@@ -15,11 +14,11 @@ if __name__ == '__main__':
     #js='return window.scrollTo(0,document.body.scrollHeight);'
     for i in range(1,33):
         course_xpath = f'//*[@id="__layout"]/div/div[4]/div[1]/div[4]/div[{i}]/a/div[2]'
-        course_name=driver.find_element(By.XPATH,course_xpath)
+        course_name=driver.find_element(by=By.XPATH,value=course_xpath)
         course_info_xpath = f'//*[@id="__layout"]/div/div[4]/div[1]/div[4]/div[{i}]/a/div[5]/div[1]'
-        course_info=driver.find_element(By.XPATH,course_info_xpath)
+        course_info=driver.find_element(by=By.XPATH,value=course_info_xpath)
         course_tags_xpath = f'//*[@id="__layout"]/div/div[4]/div[1]/div[4]/div[{i}]/a/div[3]/div'
-        course_tags=driver.find_element(By.XPATH,course_tags_xpath)
+        course_tags=driver.find_element(by=By.XPATH,value=course_tags_xpath)
         print(course_name.text,course_info.text,'\n',course_tags.text)
         if i % 8 == 0:
             js=f'return window.scrollTo(0,{n*1000});'
@@ -29,3 +28,9 @@ if __name__ == '__main__':
             
     
     driver.quit()
+    
+class A(nn.Module):
+    f'{__name__}'
+def f(self):
+    self = 10
+    print(self)
