@@ -20,4 +20,4 @@ print(f"测试张量: {x}")
 if torch.cuda.is_available():
     x_gpu = x.cuda()
     print(f"GPU 张量: {x_gpu.device}")
-    
+
