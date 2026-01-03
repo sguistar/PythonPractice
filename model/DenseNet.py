@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-import d2l
+from utils import d2l
 import matplotlib.pyplot as plt
 
 
