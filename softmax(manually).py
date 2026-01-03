@@ -6,8 +6,7 @@ from torchvision import transforms
 import matplotlib.pyplot as plt
 from matplotlib_inline import backend_inline
 from IPython import display
-
-import homework  # 💡 自己实现的可视化/标签工具
+from utils import d2l
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 # ========= 1. 画图全局配置 =========
@@ -155,10 +154,10 @@ def train(net, train_iter, test_iter, loss, num_epochs, updater):
 # ========= 5. 推理 + 可视化 =========
 def predict(net, test_iter, n=6):
     X, y = next(iter(test_iter))
-    trues = test.get_fashion_mnist_labels(y)
-    preds = test.get_fashion_mnist_labels(net(X).argmax(axis=1))
+    trues = d2l.get_fashion_mnist_labels(y)
+    preds = d2l.get_fashion_mnist_labels(net(X).argmax(axis=1))
     titles = [t + '\n' + p for t, p in zip(trues, preds)]
-    test.show_images(X[:n].reshape((n, 28, 28)), 1, n, titles=titles[:n])
+    d2l.show_images(X[:n].reshape((n, 28, 28)), 1, n, titles=titles[:n])
 
 
 # ========= 6. 数据集 =========

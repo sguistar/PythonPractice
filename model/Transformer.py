@@ -1,10 +1,8 @@
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.optim as optim
 import torch.nn.functional as F
 
-from collections import Counter
 
 # K(=Q)和V的维度
 d_k = 64
@@ -219,5 +217,5 @@ class Transformer(nn.Module):
 
         return dec_logits, enc_self_attn_weights, dec_self_attn_weights, dec_enc_attn_weights
 
-# 使用新的 NMTCorpus 类替代旧的 TranslationCorpus 类
+# 使用 NMTCorpus 类替代旧的 TranslationCorpus 类
 # NMTCorpus 类在 train.py 文件中定义
