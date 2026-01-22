@@ -1,6 +1,4 @@
-import torch
 from torch import nn
-import torch.nn.functional as F
 
 class ConvPool(nn.Module):
     '''卷积+池化'''

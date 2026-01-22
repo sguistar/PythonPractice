@@ -1,15 +1,23 @@
-n = int(input())
-for _ in range(n):
-    num = input()
-    res = set()
-    for c in num:
-        res.add(int(c))
-    for i in range(1,len(num)):
-        res.add(int(num[:i]))
-        res.add(int(num[i:]))
-        for j in range(i+1,len(num)+1):
-                res.add(int(num[i:j]))
+s = input()
+length = len(s)
+l = 0
+t = ''.join(sorted(s))
+if t == s:
+    print('Yes')
+else:
+    while l < length and s[l] == t[l]:
+        l += 1
 
-    res.add(int(num))
-    res = sorted(res)
-    print(*res)
+    r = length - 1
+
+    while r >= 0 and s[r] == t[r]:
+        r -= 1
+
+    s2 = s[:l] + s[l:r + 1][::-1] + s[r + 1:]
+    if s2 == t:
+        print('Yes')
+    else:
+        print('No')
+
+
+        
