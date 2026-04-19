@@ -1,6 +1,9 @@
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.decomposition import PCA
-
+T = int(input())
+for _ in range(T):
+    a, b, c = map(int, input().split())
+    d = b - a #公差
+    n = (c - a) // d + 1 #项数
+    s = n * (a + c) // 2
+    print(s)
+    
+     
