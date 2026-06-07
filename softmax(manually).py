@@ -176,7 +176,7 @@ W = torch.normal(0, 0.01, size=(num_inputs, num_outputs), requires_grad=True)
 b = torch.zeros(num_outputs, requires_grad=True)
 
 # ========= 8. 训练入口 =========
-updater = torch.optim.SGD([W, b], lr=0.1)  # 使用 SGD 更新裸张量
+updater = torch.optim.AdamW([W, b], lr=0.1)  # 使用 AdamW 更新裸张量
 num_epochs = 10
 train(net, train_iter, test_iter, cross_entropy, num_epochs, updater)
 predict(net, test_iter)  # 随机展示若干预测结果
